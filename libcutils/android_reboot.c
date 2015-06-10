@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <cutils/android_reboot.h>
+#include <gw_android_flags.h>
 
 /* Check to see if /proc/mounts contains any writeable filesystems
  * backed by a block device.
@@ -118,6 +119,12 @@ int android_reboot(int cmd, int flags, char *arg)
             break;
 
         case ANDROID_RB_RESTART2:
+            // Flags are only set here. They
+            // are cleared inside the recovery app.
+            if (arg && strcmp(arg, "recovery") == 0)
+                set_gw_android_recovery_flag(1);
+            if (arg && strcmp(arg, "fastboot") == 0)
+                set_gw_android_fastboot_flag(1);
             ret = __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
                            LINUX_REBOOT_CMD_RESTART2, arg);
             break;

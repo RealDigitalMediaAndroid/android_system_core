@@ -1,0 +1,1 @@
+../../../external/i2c-tools/tools/util.c
