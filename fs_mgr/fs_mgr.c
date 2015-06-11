@@ -304,7 +304,7 @@ static char const boot_device_preamble[] = {
 static char const *boot_device_base=0;
 static unsigned boot_device_base_len=0;
 static char const boot_device_default[] = {
-	"mmcblk2"
+	"sda"
 };
 
 static char const *get_boot_device_base(void){
