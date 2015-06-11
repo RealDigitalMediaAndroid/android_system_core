@@ -46,6 +46,11 @@ struct fstab_rec {
     unsigned int zram_size;
 };
 
+/* Convert "$BD5" to real path (e.g. /dev/block/sda5).
+ * device_name will be freed and caller must free the
+ * returned pointer.
+ */
+char *fs_mgr_expand_device_name(char *device_name);
 struct fstab *fs_mgr_read_fstab(const char *fstab_path);
 void fs_mgr_free_fstab(struct fstab *fstab);
 int fs_mgr_mount_all(struct fstab *fstab);

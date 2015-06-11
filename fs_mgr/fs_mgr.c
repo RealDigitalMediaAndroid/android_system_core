@@ -345,6 +345,17 @@ static char *get_boot_device(char const *fstab_entry)
 	}
 }
 
+char *fs_mgr_expand_device_name(char *device_name)
+{
+    char *expanded;
+    if (!device_name)
+        return NULL;
+
+    expanded = get_boot_device(device_name);
+    free(device_name);
+    return expanded;
+}
+
 struct fstab *fs_mgr_read_fstab(const char *fstab_path)
 {
     FILE *fstab_file;
