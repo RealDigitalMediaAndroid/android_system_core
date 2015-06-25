@@ -128,13 +128,11 @@ LOCAL_SRC_FILES += memory.c
 endif # !mips
 endif # !x86-atom
 endif # !arm
-# TODO: Find a better way than this to include the objects in libcutils.a
-#       Need a way to unpack and include contents of LOCAL_STATIC_LIBRARIES
-LOCAL_SRC_FILES += gw_android_flags.c util.c i2cbusses.c
-LOCAL_C_INCLUDES :=  external/i2c-tools/include
 
-LOCAL_C_INCLUDES += $(libcutils_c_includes) $(KERNEL_HEADERS)
+LOCAL_C_INCLUDES := $(libcutils_c_includes) $(KERNEL_HEADERS)
 LOCAL_STATIC_LIBRARIES := liblog
+LOCAL_C_INCLUDES += device/gateworks/ventana/overlay/external/gw_android_flags
+LOCAL_WHOLE_STATIC_LIBRARIES := gw_android_flags
 LOCAL_CFLAGS += $(targetSmpFlag)
 include $(BUILD_STATIC_LIBRARY)
 
