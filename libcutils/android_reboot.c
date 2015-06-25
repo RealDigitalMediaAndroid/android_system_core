@@ -101,6 +101,16 @@ static void remount_ro(void)
     return;
 }
 
+// Use GSC to do whole board reset; this should not return.
+void gsc_reset()
+{
+    int fd = open("/sys/devices/soc0/soc.1/2100000.aips-bus/21a0000.i2c/i2c-0/0-0020/powerdown", O_WRONLY);
+    if (fd < 0)
+      return;
+    const char *timeout_in_secs = "2";
+    write(fd, timeout_in_secs, 1);
+    close(fd);
+}
 
 int android_reboot(int cmd, int flags, char *arg)
 {
@@ -125,6 +135,7 @@ int android_reboot(int cmd, int flags, char *arg)
                 set_gw_android_recovery_flag(1);
             if (arg && strcmp(arg, "fastboot") == 0)
                 set_gw_android_fastboot_flag(1);
+            gsc_reset();
             ret = __reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2,
                            LINUX_REBOOT_CMD_RESTART2, arg);
             break;
