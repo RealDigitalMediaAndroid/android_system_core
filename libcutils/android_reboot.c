@@ -117,7 +117,11 @@ int android_reboot(int cmd, int flags, char *arg)
     int ret;
 
     sync();
+    sleep(2);
+    sync();
     remount_ro();
+    sync();
+    sleep(1);
 
     switch (cmd) {
         case ANDROID_RB_RESTART:
